@@ -56,7 +56,7 @@ export default function EsimCountryCard({
       </div>
       <div className="p-4 text-center">
         <h3 className="text-lg font-bold text-gray-800">{country.countryName} eSIM</h3>
-        <p className="text-sm text-gray-600 mt-1 mb-3">From ₹{price}</p>
+        {/* <p className="text-sm text-gray-600 mt-1 mb-3">From ₹{price}</p> */}
         <button
           onClick={() => onBuy(country?.countryName?.toLowerCase())}
           className="bg-black text-white w-full py-2 rounded-full hover:bg-gray-800 transition duration-200"
