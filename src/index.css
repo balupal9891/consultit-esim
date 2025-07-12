@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+:root {
+  background-color: white;
+  color: black;
+}
+
+/* #scrollableDiv {
+  scrollbar-width: 8px;
+  scrollbar-color: rgb(218, 214, 214) transparent;
+} */
+
+/* @media(prefers-color-scheme: light){
+  
+} */
+
+
