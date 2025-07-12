@@ -50,10 +50,11 @@ console.log("Order Created:", orderCreated);
     }
   };
 
+  
   const numericPrice = parseFloat(orderCreated?.amount.replace(/[^0-9.]/g, ""));
   
-  
   const createOrder = async () => {
+
     try {
       const response = await fetch(
         `${import.meta.env.VITE_SERVER_URL}/payment/create-order`,

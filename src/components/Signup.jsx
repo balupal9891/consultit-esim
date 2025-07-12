@@ -200,15 +200,15 @@ export default function SignupPage() {
 
   return (
     <>
-      <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-        <div className="relative bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md border border-gray-100">
+      <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-3">
+        <div className="relative bg-white rounded-xl shadow-2xl p-6 w-full max-w-md border border-gray-100">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-2">
               <User className="text-white" size={32} />
             </div>
             <h2 className="text-3xl font-bold text-gray-800">Create Account</h2>
-            <p className="text-gray-600 mt-2">Join us and start your journey</p>
+            <p className="text-gray-600 mt-1">Join us and start your journey</p>
           </div>
 
           {/* Form */}

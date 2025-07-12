@@ -97,10 +97,11 @@ export default function PlanPage() {
     setLoadingBuy(true);
     try {
       let token = localStorage.getItem("esim-accessToken");
+      console.log("planId", selectedPlan?.localPlanId);
       const res = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}/order/place-new-order`,
         {
-          planId: selectedPlan?.id,
+          planId: selectedPlan?.localPlanId,
         },
         {
           headers: {
