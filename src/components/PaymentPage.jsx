@@ -37,7 +37,7 @@ export default function Cashfree() {
   //         })
   //         setIsLoading(false)
   // }
-console.log("Order Created:", orderCreated);
+  console.log("Order Created:", orderCreated);
   const initializeCashfree = async () => {
     try {
       const cashfreeInstance = await load({ mode: "sandbox" });
@@ -50,17 +50,21 @@ console.log("Order Created:", orderCreated);
     }
   };
 
-  
-  const numericPrice = parseFloat(orderCreated?.amount.replace(/[^0-9.]/g, ""));
-  
-  const createOrder = async () => {
 
+  const numericPrice = parseFloat(orderCreated?.amount.replace(/[^0-9.]/g, ""));
+
+  const createOrder = async () => {
+    let token = localStorage.getItem('esim-accessToken');
     try {
+      console.log("HELLO");
+
       const response = await fetch(
         `${import.meta.env.VITE_SERVER_URL}/payment/create-order`,
         {
           method: "POST",
           headers: {
+            "Authorization": `Bearer ${token}`,
+
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
@@ -106,7 +110,8 @@ console.log("Order Created:", orderCreated);
 
       const checkoutOptions = {
         paymentSessionId: orderData.payment_session_id,
-        redirectTarget: "_modal",
+        returnUrl: `${import.meta.env.VITE_SERVER_URL}/payment/status/${orderData.order_id}`,
+        redirectTarget: "_self",
         appearance: {
           variables: {
             colorPrimary: "#3b82f6",
@@ -116,6 +121,7 @@ console.log("Order Created:", orderCreated);
           },
         },
       };
+
 
       const result = await cashfreeInstance.checkout(checkoutOptions);
 
@@ -130,6 +136,8 @@ console.log("Order Created:", orderCreated);
       setIsLoading(false);
     }
   };
+
+
 
   return (
     <div className="flex items-center justify-center bg-gray-100 px-4 py-10">
@@ -163,11 +171,10 @@ console.log("Order Created:", orderCreated);
         <button
           onClick={startPayment}
           disabled={isLoading}
-          className={`w-full py-3 px-4 rounded-xl font-medium text-white transition-all duration-300 ${
-            isLoading
+          className={`w-full py-3 px-4 rounded-xl font-medium text-white transition-all duration-300 ${isLoading
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700 active:bg-blue-800"
-          }`}
+            }`}
         >
           {isLoading ? (
             <div className="flex items-center justify-center">
