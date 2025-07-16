@@ -54,9 +54,9 @@ const HERO_IMAGES = [
 // Alphabetical Pagination Component
 function AlphabeticalPagination({ selectedLetter, onLetterSelect, availableLetters }) {
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  
+
   return (
-    <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-30 bg-white/90 backdrop-blur-sm rounded-xl p-0 shadow-lg "style={{ background:"transparent"} }>
+    <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-30 bg-white/90 backdrop-blur-sm rounded-xl p-0 shadow-lg " style={{ background: "transparent" }}>
       <div className="flex flex-col space-y-1 max-h-96 overflow-y-auto" style={{
         scrollbarWidth: 'thin',
         scrollbarColor: '#d1d5db transparent',
@@ -81,30 +81,28 @@ function AlphabeticalPagination({ selectedLetter, onLetterSelect, availableLette
         `}</style>
         <button
           onClick={() => onLetterSelect('ALL')}
-          className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
-            selectedLetter === 'ALL'
-              ? 'bg-blue-500 text-white shadow-md'
-              : 'text-gray-600 hover:bg-gray-100'
-          }`}
+          className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${selectedLetter === 'ALL'
+            ? 'bg-blue-500 text-white shadow-md'
+            : 'text-gray-600 hover:bg-gray-100'
+            }`}
         >
           ALL
         </button>
         {alphabet.map((letter) => {
           const isAvailable = availableLetters.has(letter);
           const isSelected = selectedLetter === letter;
-          
+
           return (
             <button
               key={letter}
               onClick={() => isAvailable && onLetterSelect(letter)}
               disabled={!isAvailable}
-              className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
-                isSelected
-                  ? 'bg-blue-500 text-white shadow-md'
-                  : isAvailable
+              className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${isSelected
+                ? 'bg-blue-500 text-white shadow-md'
+                : isAvailable
                   ? 'text-gray-700 hover:bg-gray-100'
                   : 'text-gray-300 cursor-not-allowed'
-              }`}
+                }`}
             >
               {letter}
             </button>
@@ -118,7 +116,7 @@ function AlphabeticalPagination({ selectedLetter, onLetterSelect, availableLette
 // Load More Button Component
 function LoadMoreButton({ onClick, isLoading, hasMore }) {
   if (!hasMore) return null;
-  
+
   return (
     <div className="flex justify-center mt-8">
       <button
@@ -175,9 +173,8 @@ function HeroSlideshow() {
       {HERO_IMAGES.map((image, index) => (
         <div
           key={index}
-          className={`slide absolute inset-0 transition-opacity duration-1000 ${
-            index === 0 ? "opacity-100" : "opacity-0"
-          }`}
+          className={`slide absolute inset-0 transition-opacity duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"
+            }`}
         >
           <img
             src={HERO_IMAGES[index].src}
@@ -195,11 +192,10 @@ function HeroSlideshow() {
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide
-                ? "bg-white shadow-lg scale-125"
-                : "bg-white/40 hover:bg-white/60"
-            }`}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide
+              ? "bg-white shadow-lg scale-125"
+              : "bg-white/40 hover:bg-white/60"
+              }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
@@ -232,6 +228,25 @@ function CountriesGridSkeleton() {
   );
 }
 
+const useIsVisible = (ref) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting)
+    );
+
+    const currentRef = ref.current;
+    if (currentRef) observer.observe(currentRef);
+
+    return () => {
+      if (currentRef) observer.unobserve(currentRef);
+    };
+  }, [ref]);
+
+  return isVisible;
+};
+
 function App() {
   const navigate = useNavigate();
   const { user } = useUser();
@@ -247,6 +262,8 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const heroRef = useRef(null);
   const searchRef = useRef(null);
+  const sectionRef = useRef(null);
+  const isSectionVisible = useIsVisible(sectionRef);
 
   // Memoized filtered countries based on search and letter
   const filteredCountries = useMemo(() => {
@@ -330,10 +347,10 @@ function App() {
       // First sort by popularity
       const aPopular = POPULAR_COUNTRIES.includes(a.countryName.toLowerCase());
       const bPopular = POPULAR_COUNTRIES.includes(b.countryName.toLowerCase());
-      
+
       if (aPopular && !bPopular) return -1;
       if (!aPopular && bPopular) return 1;
-      
+
       // Then sort alphabetically
       return a.countryName.localeCompare(b.countryName);
     });
@@ -398,6 +415,8 @@ function App() {
   function handleOnBuy(countryName) {
     navigate(`/products/${countryName}`);
   }
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 font-sans overflow-hidden">
@@ -503,7 +522,7 @@ function App() {
       )}
 
       {/* Search and Full List Section */}
-      <section className="py-16 px-6 md:px-12 lg:px-20 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative">
+      <section  ref={sectionRef} className="py-16 px-6 md:px-12 lg:px-20 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative">
         <div className="relative py-20 px-6 md:px-12 lg:px-20 bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 overflow-hidden border-2 border-white/20 rounded-3xl shadow-lg">
           {/* World Map Background */}
           <div className="absolute inset-0 opacity-10">
@@ -566,14 +585,17 @@ function App() {
         </div>
 
         {/* Alphabetical Pagination */}
-        <AlphabeticalPagination
-          selectedLetter={selectedLetter}
-          onLetterSelect={handleLetterSelect}
-          availableLetters={availableLetters}
-        />
-{/* <RegionWiseESIM jsx={true}/> */}
+        {isSectionVisible && (
+          <AlphabeticalPagination
+            selectedLetter={selectedLetter}
+            onLetterSelect={handleLetterSelect}
+            availableLetters={availableLetters}
+          />
+        )}
+        {/* <RegionWiseESIM jsx={true}/> */}
+        {/* <RegionWiseESIM /> */}
         {/* Filter Info */}
-        <div className="mt-8 mb-4 text-center">
+        <div  className="mt-8 mb-4 text-center">
           <p className="text-gray-600">
             {selectedLetter === 'ALL' ? 'All countries' : `Countries starting with "${selectedLetter}"`}
             {searchTerm && ` matching "${searchTerm}"`}
@@ -599,7 +621,7 @@ function App() {
                   />
                 ))}
               </div>
-              
+
               {/* Load More Button */}
               <LoadMoreButton
                 onClick={handleLoadMore}

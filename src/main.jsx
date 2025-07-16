@@ -25,6 +25,7 @@ import RefundPolicy from './FooterPages/Policies/RefundPolicy.jsx';
 import TermsOfService from './FooterPages/Policies/TermsOfServices.jsx';
 import PrivacyPolicy from './FooterPages/Policies/PrivacyPolicy.jsx';
 import KYCPolicy from './FooterPages/Policies/KYC.jsx';
+import SuccessPage from './pages/paymentPages/SuccessPage.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -41,12 +42,14 @@ createRoot(document.getElementById('root')).render(
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/products/:country" element={<PlanPage />} />
+
             <Route path="/payment/:id" element={<PaymentPage />} />
-             
-              <Route path="/refund-policy" element={<RefundPolicy />} />
-              <Route path="/termsofservices" element={<TermsOfService />} />
-              <Route path="/privacy" element={<PrivacyPolicy />} />
-              <Route path="/kyc" element={<KYCPolicy/>} />
+            <Route path="/payment/status/" element={<SuccessPage />} />
+
+            <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/termsofservices" element={<TermsOfService />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/kyc" element={<KYCPolicy />} />
 
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route path="orders" element={<OrdersPage />} />
@@ -54,7 +57,6 @@ createRoot(document.getElementById('root')).render(
               <Route path="allesims" element={<AllEsims />} />
               <Route path="activate" element={<ActivateEsim />} />
               <Route path="orders/:id" element={<OrderViewPage />} />
-              
             </Route>
             {/* <Route path="/dashboard/orders" element={<OrdersPage />} />
             <Route path="/dashboard/products/:id" element={<ProductPage />} />

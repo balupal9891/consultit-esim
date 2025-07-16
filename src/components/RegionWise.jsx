@@ -198,7 +198,7 @@ const totalCountries = esimData.reduce((acc, plan) => acc + (plan.countries?.len
                 <div className="text-right">
                   <div className="text-white/90 text-sm">Total Countries</div>
                   <div className="text-2xl font-bold text-white">
-                    {filteredData[region].reduce((acc, plan) => acc + plan.countries.length, 0)}
+                    {filteredData[region].reduce((acc, plan) => acc + plan.countries?.length, 0)}
                   </div>
                 </div>
               </div>
@@ -231,11 +231,11 @@ const totalCountries = esimData.reduce((acc, plan) => acc + (plan.countries?.len
                       <div className="flex items-center mb-2">
                         <MapPin className="w-4 h-4 text-gray-400 mr-1" />
                         <span className="text-sm font-medium text-gray-700">
-                          {plan.countries.length} {plan.countries.length === 1 ? 'Country' : 'Countries'}
+                          {plan.countries?.length} {plan.countries?.length === 1 ? 'Country' : 'Countries'}
                         </span>
                       </div>
                       <div className="flex flex-wrap gap-1">
-                        {plan.countries.slice(0, 4).map(country => (
+                        {plan.countries?.slice(0, 4).map(country => (
                           <span
                             key={country.countryLocalId}
                             className="inline-flex items-center px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
@@ -244,7 +244,7 @@ const totalCountries = esimData.reduce((acc, plan) => acc + (plan.countries?.len
                             {country.countryName}
                           </span>
                         ))}
-                        {plan.countries.length > 4 && (
+                        {plan.countries?.length > 4 && (
                           <span className="inline-flex items-center px-2 py-1 bg-gray-200 text-gray-600 text-xs rounded-full">
                             +{plan.countries.length - 4} more
                           </span>
